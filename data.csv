@@ -1,0 +1,5 @@
+Nazwa,URL,Osoba Kontaktowa,Kategoria,Timing,"Czy Publiczna (Tak/Nie)",Finansujący,Miejsce,Region,Opis,Grupa Docelowa,"Tagi (oddzielone przecinkiem)","Kategoria Tematyczna"
+Projekt Alfa,"http://alfa.example.com","Anna Nowak","Badania","Q1 2024","Tak","Fundacja Rozwoju","Warszawa","Mazowieckie","Opis projektu Alfa dotyczacy innowacji","Naukowcy, Studenci","innowacje,nauka","Technologia"
+Inicjatywa Beta,"","Jan Kowalski","Szkolenia","Cały rok 2024","Tak","Sponsor Prywatny","Kraków","Małopolskie","Szkolenia z zakresu zarządzania projektami","Menedżerowie","szkolenia,zarządzanie","Biznes"
+Program Gamma,"https://gamma.org","","Społeczne","2024-2025","Nie","Dotacja UE","Gdańsk","Pomorskie","Długoterminowy program wsparcia lokalnej społeczności.","Mieszkańcy","społeczne,lokalne,wolontariat","Społeczeństwo"
+Testowa Inicjatywa bez URL,"","","Testowa","Krótko","Tak","","","","","","test","Inne"
