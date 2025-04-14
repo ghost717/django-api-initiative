@@ -12,6 +12,10 @@ router.register(r'tags', TagViewSet, basename='tag')
 # URL patterns API są teraz automatycznie generowane przez router.
 # Dodaj ścieżkę dla importu
 urlpatterns = [
+    path(
+        'initiatives/import/', 
+        InitiativeImportView.as_view(), 
+        name='initiative-import'
+    ),
     path('', include(router.urls)),
-    path('initiatives/import/', InitiativeImportView.as_view(), name='initiative-import'), # Nowy URL
 ]
