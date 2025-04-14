@@ -2,8 +2,9 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-// Poprawiony import tabeli i typów
+import { useRouter } from 'next/navigation'; // Importuj useRouter
 import InitiativeTable, { Initiative, SortConfig } from './InitiativeTable';
+import InitiativeImportForm from './InitiativeImportForm';
 // Importuj ikony, jeśli jeszcze nie masz react-icons lub heroicons
 // np. import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
@@ -17,6 +18,7 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
     const [searchTerm, setSearchTerm] = useState('');
     const [sortConfig, setSortConfig] = useState<SortConfig>(null); // Stan sortowania
     const [currentPage, setCurrentPage] = useState(1); // Stan paginacji
+    const router = useRouter();
 
     // Krok 1: Filtrowanie
     const filteredInitiatives = useMemo(() => {
@@ -120,10 +122,25 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
         return rangeWithDots;
     }
 
+    const handleImportSuccess = () => {
+        console.log("Import successful, refreshing data...");
+        // router.refresh() ponownie uruchomi pobieranie danych w Server Component (page.tsx)
+        // i zaktualizuje UI bez pełnego przeładowania strony.
+        router.refresh();
+        // Opcjonalnie: resetuj filtry/sortowanie/paginację w komponencie klienckim
+        // setSearchTerm('');
+        // setSortConfig(null);
+        // setCurrentPage(1);
+    };
+
+    // Pobierz URL API ze zmiennych środowiskowych (upewnij się, że jest dostępny po stronie klienta)
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     return (
         // Szerokość kontenera dla spójności
         <div className="w-full flex flex-col items-center">
+            <InitiativeImportForm onImportSuccess={handleImportSuccess} apiUrl={apiUrl || ''} />
+
             {/* Pasek wyszukiwania */}
             <div className="mb-6 w-full max-w-2xl">
                 <input
