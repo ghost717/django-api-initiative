@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +26,9 @@ SECRET_KEY = 'django-insecure-(_rp6#qtx#hp-6wxrv80+tvto_#)eiaa0hp6wl+w07p0+$(8jy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "172.30.23.121",
+]
 
 
 # Application definition
@@ -58,6 +61,8 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",      # Adres Next.js dev server
     "http://127.0.0.1:3000",     # Alternatywny adres Next.js dev server
+    "http://172.30.23.121:3000",     # Alternatywny adres Next.js dev server
+    # "http://172.30.23.121:8080",    
 ]
 
 
@@ -127,7 +132,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
+
+UPLOAD_URL = '/upload/'
+UPLOAD_ROOT = os.path.join(BASE_DIR, 'upload')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
