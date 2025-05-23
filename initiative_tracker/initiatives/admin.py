@@ -9,14 +9,16 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Initiative)
 class InitiativeAdmin(admin.ModelAdmin):
+    # Używamy nazw pól z nowego models.py
     list_display = (
         'name',
         'implementing_entity_name',
-        'entity_status',
-        'implementation_area',
-        'funding_source',
+        'entity_status', # Nazwa pola w modelu
+        'implementation_area', # Nazwa pola w modelu
+        'funding_source', # Nazwa pola w modelu
         'created_at'
     )
+    # Filtrujemy po rzeczywistych polach modelu
     list_filter = (
         'entity_status',
         'implementation_area',
@@ -24,6 +26,7 @@ class InitiativeAdmin(admin.ModelAdmin):
         'tags',
         'created_at'
     )
+    # Wyszukujemy w odpowiednich polach
     search_fields = (
         'name',
         'acronym',
@@ -31,21 +34,20 @@ class InitiativeAdmin(admin.ModelAdmin):
         'location_text',
         'description'
     )
-    filter_horizontal = ('tags',) # Wygodniejszy interfejs dla tagów
-    # Można dodać fieldsets dla lepszej organizacji w formularzu admina
+    filter_horizontal = ('tags',) # Dla wygody edycji tagów
+
+    # Organizacja formularza w panelu admina
     fieldsets = (
         ('Informacje Ogólne', {
+            # Używamy nazw pól z nowego models.py
             'fields': ('name', 'acronym', 'implementing_entity_name', 'entity_status', 'implementation_area', 'location_text', 'implementing_entity_url')
         }),
         ('Szczegółowe Informacje', {
+            # Używamy nazw pól z nowego models.py
             'fields': ('description', 'timing', 'funding_source', 'url', 'tags')
         }),
     )
-    
-# @admin.register(Initiative)
-# class InitiativeAdmin(admin.ModelAdmin):
-#     list_display = ('name', 'person', 'region', 'public', 'created_at')
-#     list_filter = ('public', 'region', 'tags', 'created_at')
-#     search_fields = ('name', 'description', 'person', 'place', 'region', 'funders')
-#     # Ulepszenie wyświetlania pola ManyToMany
-#     filter_horizontal = ('tags',) # Wygodniejszy interfejs dla tagów
+    # Nie definiujemy 'fields', jeśli używamy 'fieldsets'
+
+    # Można dodać pola tylko do odczytu w adminie (np. daty)
+    readonly_fields = ('created_at', 'updated_at')
