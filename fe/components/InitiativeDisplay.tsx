@@ -89,7 +89,29 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
     const goToNextPage = () => setCurrentPage((page) => Math.min(page + 1, totalPages));
     const goToPreviousPage = () => setCurrentPage((page) => Math.max(page - 1, 1));
     const goToPage = (pageNumber: number) => { if (pageNumber >= 1 && pageNumber <= totalPages) setCurrentPage(pageNumber); }
-    const getPageNumbers = useCallback(() => { /* ... logika bez zmian ... */ return []; }, [currentPage, totalPages]);
+    // const getPageNumbers = useCallback(() => { /* ... logika bez zmian ... */ return []; }, [currentPage, totalPages]);
+    const getPageNumbers = useCallback(() => {
+        const delta = 1;
+        const range = [];
+        const rangeWithDots: (number | string)[] = [];
+        let l: number | null = null;
+
+        range.push(1);
+        for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+            range.push(i);
+        }
+        if (totalPages > 1) range.push(totalPages);
+
+        for (let i of range) {
+            if (l !== null) {
+                if (i - l === 2) rangeWithDots.push(l + 1);
+                else if (i - l > 2) rangeWithDots.push('...');
+            }
+            rangeWithDots.push(i);
+            l = i;
+        }
+        return rangeWithDots;
+    }, [currentPage, totalPages]);
 
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
