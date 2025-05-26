@@ -16,6 +16,7 @@ const InitiativeInfoModal: React.FC<InitiativeInfoModalProps> = ({ isOpen, onClo
         <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6">
                 <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">{initiative.name}</h3>
+                <hr /><br />
                 <dl className="space-y-2 text-gray-700 dark:text-gray-300">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="col-span-2"><dt className="font-bold dark:text-white uppercase">Akronim:</dt><dd>{initiative.acronym || '-'}</dd></div>
