@@ -33,8 +33,6 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
     const [apiSuccess, setApiSuccess] = useState<string | null>(null);
     const [availableTags, setAvailableTags] = useState<ApiTag[]>([]);
 
-    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-
     // --- Filtrowanie, Sortowanie, Paginacja ---
     const filteredInitiatives = useMemo(() => {
         if (!initialInitiatives) return [];
@@ -93,6 +91,7 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
     const goToPage = (pageNumber: number) => { if (pageNumber >= 1 && pageNumber <= totalPages) setCurrentPage(pageNumber); }
     const getPageNumbers = useCallback(() => { /* ... logika bez zmian ... */ return []; }, [currentPage, totalPages]);
 
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
     // --- Pobieranie tagów (bez zmian) ---
     useEffect(() => {
@@ -112,6 +111,18 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
             }
         };
         fetchTags();
+    }, [apiUrl]);
+
+
+    // --- Pobierz tagi ---
+    useEffect(() => {
+        if (!apiUrl) return;
+        setIsLoading(true);
+        fetch(`${apiUrl}/tags/`)
+            .then(r => r.ok ? r.json() : Promise.reject())
+            .then((data: ApiTag[]) => setAvailableTags(data))
+            .catch(() => setApiError('Nie udało się załadować tagów'))
+            .finally(() => setIsLoading(false));
     }, [apiUrl]);
 
     // --- Handlery CRUD (logika API bez zmian, ale payload będzie inny) ---
@@ -243,14 +254,15 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
                 isOpen={isInfoModalOpen}
                 onClose={handleCloseModal}
                 initiative={selectedInitiative!}
+                availableTags={availableTags}
             />
             <InitiativeModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
                 onSubmit={handleModalSubmit}
                 initialData={selectedInitiative}
-                isLoading={isLoading}
                 availableTags={availableTags}
+                isLoading={isLoading}
             />
             <DeleteConfirmationModal
                 isOpen={isDeleteModalOpen}

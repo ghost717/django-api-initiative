@@ -3,15 +3,29 @@
 
 import React from 'react';
 import { Initiative } from './InitiativeTable';
+import { ApiTag } from './InitiativeModal';
 
 interface InitiativeInfoModalProps {
     isOpen: boolean;
     onClose: () => void;
     initiative: Initiative;
+    availableTags: ApiTag[];
 }
 
-const InitiativeInfoModal: React.FC<InitiativeInfoModalProps> = ({ isOpen, onClose, initiative }) => {
+const InitiativeInfoModal: React.FC<InitiativeInfoModalProps> = ({
+    isOpen,
+    onClose,
+    initiative,
+    availableTags,
+}) => {
     if (!isOpen) return null;
+
+    const tagNames = initiative.tags.length
+        ? initiative.tags
+            .map(id => availableTags.find(t => t.id === id)?.name || `#${id}`)
+            .join(', ')
+        : '-';
+
     return (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6">
@@ -36,7 +50,8 @@ const InitiativeInfoModal: React.FC<InitiativeInfoModalProps> = ({ isOpen, onClo
                                     : '-'}
                             </dd>
                         </div>
-                        <div><dt className="font-bold dark:text-white uppercase">Tagi (ID):</dt><dd>{initiative.tags.join(', ') || '-'}</dd></div>
+                        <div><dt className="font-bold dark:text-white uppercase">Tagi (ID):</dt><dd>{tagNames}</dd></div>
+
                     </div>
                     <div className="flex">
                         <div className="w-50"><dt className="font-bold dark:text-white uppercase">Utworzono:</dt><dd>{new Date(initiative.created_at).toLocaleString()}</dd></div>
