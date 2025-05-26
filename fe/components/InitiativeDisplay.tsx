@@ -8,6 +8,7 @@ import InitiativeTable, { Initiative, SortConfig } from './InitiativeTable';
 import InitiativeImportForm from './InitiativeImportForm';
 import InitiativeModal, { ApiTag } from './InitiativeModal';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
+import InitiativeInfoModal from './InitiativeInfoModal';
 import { PlusIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
 interface InitiativeDisplayProps {
@@ -31,6 +32,8 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
     const [apiError, setApiError] = useState<string | null>(null);
     const [apiSuccess, setApiSuccess] = useState<string | null>(null);
     const [availableTags, setAvailableTags] = useState<ApiTag[]>([]);
+
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
     // --- Filtrowanie, Sortowanie, Paginacja ---
     const filteredInitiatives = useMemo(() => {
@@ -121,12 +124,17 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
         setSelectedInitiative(null);
     }, [router]);
 
+    const handleRowClick = useCallback((initiative: Initiative) => {
+        setSelectedInitiative(initiative);
+        setIsInfoModalOpen(true);
+    }, []);
+
     useEffect(() => { setApiError(null); setApiSuccess(null); }, [searchTerm, currentPage]);
 
     const handleAddClick = () => { setSelectedInitiative(null); setModalMode('add'); setApiError(null); setApiSuccess(null); setIsModalOpen(true); };
     const handleEditClick = useCallback((initiative: Initiative) => { setSelectedInitiative(initiative); setModalMode('edit'); setApiError(null); setApiSuccess(null); setIsModalOpen(true); }, []);
     const handleDeleteClick = useCallback((initiative: Initiative) => { setSelectedInitiative(initiative); setApiError(null); setApiSuccess(null); setIsDeleteModalOpen(true); }, []);
-    const handleCloseModal = () => { setIsModalOpen(false); setIsDeleteModalOpen(false); };
+    const handleCloseModal = () => { setIsModalOpen(false); setIsDeleteModalOpen(false); setIsInfoModalOpen(false); };
 
     // Submit Modal (Dodaj/Edytuj)
     const handleModalSubmit = useCallback(async (formData: Partial<Initiative>) => {
@@ -192,7 +200,7 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
 
             {/* Import */}
             <div className="w-full max-w-7xl">
-                <InitiativeImportForm onImportSuccess={handleImportSuccess} apiUrl={apiUrl} />
+                {/* <InitiativeImportForm onImportSuccess={handleImportSuccess} apiUrl={apiUrl} /> */}
             </div>
 
             {/* Pasek Akcji */}
@@ -212,6 +220,7 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
                 sortConfig={sortConfig}
                 onEdit={handleEditClick}
                 onDelete={handleDeleteClick}
+                onRowClick={handleRowClick}
             />
 
             {/* Paginacja */}
@@ -230,8 +239,28 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
             )}
 
             {/* Modale */}
-            <InitiativeModal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleModalSubmit} initialData={selectedInitiative} isLoading={isLoading} availableTags={availableTags} />
-            <DeleteConfirmationModal isOpen={isDeleteModalOpen} onClose={handleCloseModal} onConfirm={handleConfirmDelete} initiativeName={selectedInitiative?.name || ''} isLoading={isLoading} />
+            <InitiativeInfoModal
+                isOpen={isInfoModalOpen}
+                onClose={handleCloseModal}
+                initiative={selectedInitiative!}
+            />
+            <InitiativeModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                onSubmit={handleModalSubmit}
+                initialData={selectedInitiative}
+                isLoading={isLoading}
+                availableTags={availableTags}
+            />
+            <DeleteConfirmationModal
+                isOpen={isDeleteModalOpen}
+                onClose={handleCloseModal}
+                onConfirm={handleConfirmDelete}
+                initiativeName={selectedInitiative?.name || ''}
+                isLoading={isLoading}
+            />
+            {/* <InitiativeModal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleModalSubmit} initialData={selectedInitiative} isLoading={isLoading} availableTags={availableTags} />
+            <DeleteConfirmationModal isOpen={isDeleteModalOpen} onClose={handleCloseModal} onConfirm={handleConfirmDelete} initiativeName={selectedInitiative?.name || ''} isLoading={isLoading} /> */}
 
             {/* Proste style dla alertów i paginacji - dodaj do <style jsx> lub globalnego CSS */}
             <style jsx>{`
