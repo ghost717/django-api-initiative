@@ -58,7 +58,7 @@ const InitiativeTable: React.FC<InitiativeTableProps> = ({
 
     return (
         <div className="overflow-x-auto w-full">
-            <table className="min-w-full bg-white">
+            <table id="initiative-table" className="min-w-full bg-white">
                 <thead className="bg-gray-50">
                     <tr>
                         {columns.map(col => (
