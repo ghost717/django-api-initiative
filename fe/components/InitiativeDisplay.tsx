@@ -238,11 +238,22 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
 
             {/* Pasek Akcji */}
             <div className="w-full max-w-7xl flex flex-col md:flex-row justify-between items-center my-6 gap-4">
-                <button onClick={handleAddClick} disabled={isLoading} className="btn-primary w-full md:w-auto">
-                    <PlusIcon className="-ml-1 mr-2 h-5 w-5 inline" /> Dodaj Inicjatywę
+                <button
+                    onClick={handleAddClick}
+                    disabled={isLoading}
+                    className="flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-transparent rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                >
+                    <PlusIcon className="h-5 w-5 mr-2" aria-hidden="true" />
+                    Dodaj Inicjatywę
                 </button>
-                <div className="w-full md:w-1/2 lg:w-1/3">
-                    <input type="search" placeholder="Filtruj..." value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }} className="input-field w-full" />
+                <div className="w-full md:w-auto">
+                    <input
+                        type="search"
+                        placeholder="Filtruj..."
+                        value={searchTerm}
+                        onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+                        className="w-full md:w-64 px-3 py-2 text-sm border-b-2 border-gray-300 focus:border-blue-500 focus:outline-none bg-transparent"
+                    />
                 </div>
             </div>
 
