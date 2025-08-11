@@ -1,23 +1,21 @@
 // app/page.tsx
-import InitiativeDisplay from '@/components/InitiativeDisplay'; // Ścieżka do komponentu klienckiego
-import { Initiative } from '@/components/InitiativeTable'; // Importuj typ Initiative
+import InitiativeDisplay from '@/components/InitiativeDisplay';
+import { Initiative } from '@/components/InitiativeTable';
+import Image from 'next/image'; // Krok 1: Import komponentu Image
 
-// Funkcja do pobierania danych - może być w osobnym pliku lib/api.ts
+// Funkcja getInitiatives pozostaje bez zmian...
 async function getInitiatives(): Promise<Initiative[] | null> {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     if (!apiUrl) {
         console.error('Błąd: Zmienna środowiskowa NEXT_PUBLIC_API_URL nie jest ustawiona.');
-        return null; // Zwróć null w przypadku braku URL
+        return null;
     }
 
     try {
-        // Używamy { cache: 'no-store' } aby dane były zawsze świeże przy każdym żądaniu strony.
-        // Możesz dostosować strategię cache'owania Next.js wg potrzeb (np. revalidate).
         const response = await fetch(`${apiUrl}/initiatives/`, { cache: 'no-store' });
 
         if (!response.ok) {
-            // Rzucenie błędu spowoduje wyświetlenie najbliższego error.tsx lub domyślnej strony błędu Next.js
             throw new Error(`Błąd HTTP! Status: ${response.status}`);
         }
 
@@ -25,49 +23,52 @@ async function getInitiatives(): Promise<Initiative[] | null> {
         return data;
     } catch (error) {
         console.error('Nie udało się pobrać inicjatyw:', error);
-        // W środowisku produkcyjnym możesz chcieć zalogować ten błąd inaczej
-        // Rzucenie błędu tutaj też pokaże stronę błędu.
-        // Alternatywnie, zwróć null i obsłuż to w komponencie poniżej.
-        // throw error; // Rzuć błąd dalej, aby Next.js go obsłużył (np. przez error.js)
-        return null; // Lub zwróć null i wyświetl komunikat o błędzie w komponencie
+        return null;
     }
 }
 
-// Komponent strony jest teraz asynchroniczny
 export default async function Home() {
-    // Pobierz dane na serwerze
     const initiatives = await getInitiatives();
 
-    // Zastępujemy domyślną treść Next.js naszą strukturą
     return (
-        // Dostosuj główny kontener, aby lepiej pasował do tabeli
-        // Usunięto grid i specyficzne dla dema stylowanie
-        <div className="flex flex-col items-center min-h-screen p-4 sm:p-8 md:p-12 lg:p-16 bg-gray-50 dark:bg-gray-900">
-            <main className="w-full max-w-7xl flex flex-col items-center gap-8"> {/* Ustaw max szerokość i wyśrodkuj */}
-                <h1 className="text-3xl font-bold text-gray-800 dark:text-white mt-8 mb-4">
+        <div className="flex flex-col items-center min-h-screen p-4 sm:p-8 md:p-12 lg:p-16 bg-gray-50">
+            <main className="w-full max-w-7xl flex flex-col items-center gap-8">
+
+                <div className="flex items-center justify-between gap-x-8 sm:gap-x-12 mb-4 w-full">
+                    <Image
+                        src="/logo_debuting.png" // Ścieżka do pierwszego logo w folderze /public
+                        alt="Logo Pierwszej Organizacji"
+                        width={300} // Ustaw szerokość
+                        height={150}  // Ustaw wysokość
+                        priority // Dodaj, jeśli to ważne logo (LCP)
+                        className="h-15 w-auto" // Dostosowanie rozmiaru na różnych ekranach
+                    />
+                    <Image
+                        src="/logo_umwp.png" // Ścieżka do drugiego logo w folderze /public
+                        alt="Logo Drugiej Organizacji"
+                        width={300} // Ustaw szerokość
+                        height={150}  // Ustaw wysokość
+                        priority
+                        className="h-15 w-auto" // Dostosowanie rozmiaru
+                    />
+                </div>
+
+                <h1 className="text-3xl font-bold text-gray-800 mt-4 mb-4">
                     Lista Inicjatyw
                 </h1>
 
-                {/* Warunkowe renderowanie */}
                 {initiatives === null ? (
-                    // Wyświetl błąd, jeśli dane nie zostały pobrane
                     <p className="text-center text-red-500">
                         Nie udało się załadować danych inicjatyw. Sprawdź połączenie z API lub spróbuj ponownie później.
                     </p>
                 ) : initiatives.length === 0 ? (
-                    // Wyświetl komunikat, jeśli API zwróciło pustą listę
                     <p className="text-center text-gray-500 mt-4">
                         Brak inicjatyw do wyświetlenia.
                     </p>
-                ) : (
-                    // Przekaż pobrane dane do komponentu klienckiego
+                    ) : (
                     <InitiativeDisplay initialInitiatives={initiatives} />
                 )}
             </main>
-            {/* Możesz dodać stopkę lub inne elementy, jeśli potrzebujesz */}
-            {/* <footer className="mt-16 text-center text-gray-500 text-sm">
-         Stopka aplikacji
-       </footer> */}
         </div>
     );
 }
