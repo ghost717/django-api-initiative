@@ -40,6 +40,9 @@ body {
   background-color: rgb(193 208 241);
 }
 
+#initiative-table tbody tr:hover {
+  background-color: rgba(193, 208, 241, 0.5);
+}
 #initiative-form input,
 #initiative-form textarea,
 #initiative-form select {
