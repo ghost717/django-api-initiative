@@ -57,7 +57,7 @@ const InitiativeTable: React.FC<InitiativeTableProps> = ({
     ];
 
     return (
-        <div className="overflow-x-auto w-full">
+        <div className="overflow-x-auto w-full shadow-lg rounded-lg">
             <table id="initiative-table" className="min-w-full bg-white">
                 <thead className="bg-gray-50">
                     <tr>
