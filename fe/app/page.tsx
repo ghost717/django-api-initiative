@@ -34,25 +34,24 @@ export default async function Home() {
         <div className="flex flex-col items-center min-h-screen p-4 sm:p-8 md:p-12 lg:p-16 bg-gray-50">
             <main className="w-full max-w-7xl flex flex-col items-center gap-8">
 
-                <div className="flex items-center justify-between gap-x-8 sm:gap-x-12 mb-4 w-full">
+                <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-y-6 md:gap-x-12 mb-4 w-full">
                     <Image
-                        src="/logo_debuting.png" // Ścieżka do pierwszego logo w folderze /public
-                        alt="Logo Pierwszej Organizacji"
-                        width={300} // Ustaw szerokość
-                        height={150}  // Ustaw wysokość
-                        priority // Dodaj, jeśli to ważne logo (LCP)
-                        className="h-16 w-auto" // Dostosowanie rozmiaru na różnych ekranach
+                        src="/logo_debuting.png"
+                        alt="Logo projektu DEBUTING"
+                        width={300}
+                        height={150}
+                        priority
+                        className="h-16 w-auto" // Wysokość 64px
                     />
                     <Image
-                        src="/logo_umwp.png" // Ścieżka do drugiego logo w folderze /public
-                        alt="Logo Drugiej Organizacji"
-                        width={300} // Ustaw szerokość
-                        height={150}  // Ustaw wysokość
+                        src="/logo_umwp.png"
+                        alt="Logo Urzędu Marszałkowskiego Województwa Pomorskiego"
+                        width={300}
+                        height={150}
                         priority
-                        className="h-15 w-auto" // Dostosowanie rozmiaru
+                        className="h-14 w-auto" // Wysokość 56px (poprawiona z nieistniejącej h-15)
                     />
                 </div>
-
                 <h1 className="text-3xl font-bold text-gray-800 mt-4 mb-4">
                     Lista Inicjatyw
                 </h1>
