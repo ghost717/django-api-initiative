@@ -224,17 +224,18 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
 
     // --- Renderowanie ---
     return (
-        <div className="w-full flex flex-col items-center px-4 sm:px-6 lg:px-8">
-            {/* Komunikaty */}
+        // <div className="w-full flex flex-col items-center px-4 sm:px-6 lg:px-8">
+        <div className="w-full flex flex-col items-center">
+
             <div className="w-full max-w-7xl my-4 space-y-2">
                 {apiError && <div className="alert-error">{apiError}</div>}
                 {apiSuccess && <div className="alert-success">{apiSuccess}</div>}
             </div>
 
             {/* Import */}
-            <div className="w-full max-w-7xl">
+            {/* <div className="w-full max-w-7xl"> */}
                 {/* <InitiativeImportForm onImportSuccess={handleImportSuccess} apiUrl={apiUrl} /> */}
-            </div>
+            {/* </div> */}
 
             {/* Pasek Akcji */}
             <div className="w-full max-w-7xl flex flex-col md:flex-row justify-between items-center my-6 gap-4">

@@ -41,7 +41,7 @@ export default async function Home() {
                         width={300} // Ustaw szerokość
                         height={150}  // Ustaw wysokość
                         priority // Dodaj, jeśli to ważne logo (LCP)
-                        className="h-18 w-auto" // Dostosowanie rozmiaru na różnych ekranach
+                        className="h-16 w-auto" // Dostosowanie rozmiaru na różnych ekranach
                     />
                     <Image
                         src="/logo_umwp.png" // Ścieżka do drugiego logo w folderze /public
