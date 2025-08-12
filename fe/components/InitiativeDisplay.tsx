@@ -271,7 +271,9 @@ const InitiativeDisplay: React.FC<InitiativeDisplayProps> = ({ initialInitiative
             {/* Paginacja */}
             {totalPages > 1 && (
                 <nav className="mt-6 flex items-center justify-between w-full max-w-7xl px-4 sm:px-0" aria-label="Paginacja">
-                    <div className="hidden sm:block"> <p className="text-sm text-gray-700 dark:text-gray-400"> Pokazano ... </p> </div>
+                    <div className="hidden sm:block">
+                        {/* <p className="text-sm text-gray-700 dark:text-gray-400"> Pokazano ... </p>  */}
+                    </div>
                     <div className="flex flex-1 justify-between sm:justify-end">
                         <button onClick={goToPreviousPage} disabled={currentPage === 1 || isLoading} className="btn-pagination"> <ChevronLeftIcon className="h-5 w-5 mr-1" /> Poprzednia </button>
                         {/* Numery stron */}
