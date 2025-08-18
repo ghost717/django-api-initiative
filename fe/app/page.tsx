@@ -52,8 +52,8 @@ export default async function Home() {
                         className="h-14 w-auto" // Wysokość 56px (poprawiona z nieistniejącej h-15)
                     />
                 </div>
-                <h1 className="text-3xl font-bold text-gray-800 mt-4 mb-4">
-                    Lista Inicjatyw
+                <h1 className="text-3xl text-center font-bold text-gray-800 mt-4 mb-4">
+                    SheMapPower – Siła kobiet <br /><span className="text-2xl">Lista inicjatyw z województwa pomorskiego dedykowanych kobietom</span>
                 </h1>
 
                 {initiatives === null ? (
