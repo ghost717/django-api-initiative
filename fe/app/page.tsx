@@ -53,7 +53,7 @@ export default async function Home() {
                     />
                 </div>
                 <h1 className="text-3xl text-center font-bold text-gray-800 mt-4 mb-4">
-                    SheMapPower – Siła kobiet <br /><span className="text-2xl">Lista inicjatyw z województwa pomorskiego dedykowanych kobietom</span>
+                    HerNetwork – Siła kobiet <br /><span className="text-2xl">Lista inicjatyw z województwa pomorskiego dedykowanych kobietom</span>
                 </h1>
 
                 {initiatives === null ? (
