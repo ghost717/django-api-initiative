@@ -3,28 +3,27 @@ version: '3.8'
 services:
   # Usługa dla backendu Django
   backend:
-    build: ./be # Ścieżka do katalogu z Dockerfilem backendu
+    build: ./be
     container_name: django_backend
     ports:
-      - "8000:8000" # Mapuj port 8000 z kontenera na port 8000 na Twoim komputerze
+      - "8001:8000" # <--- ZMIANA TUTAJ
     volumes:
-      - ./be:/app # Podłącz kod backendu jako wolumen (zmiany w kodzie będą widoczne od razu)
-                  # To również sprawi, że plik db.sqlite3 będzie zapisywany na Twoim dysku
+      - ./be:/app
     command: >
       sh -c "python manage.py migrate && 
              python manage.py runserver 0.0.0.0:8000"
-      # Najpierw uruchom migracje, potem serwer na adresie 0.0.0.0
 
   # Usługa dla frontendu Next.js
   frontend:
-    build: ./fe # Ścieżka do katalogu z Dockerfilem frontendu
+    build: ./fe
     container_name: nextjs_frontend
     ports:
-      - "3000:3000" # Mapuj port 3000 z kontenera na port 3000 na Twoim komputerze
+      - "3000:3000" # Ten port pozostaje bez zmian
     volumes:
-      - ./fe:/app # Podłącz kod frontendu jako wolumen (Hot Reloading będzie działał)
-      - /app/node_modules # Wyklucz node_modules z wolumenu, aby używać tych z obrazu
+      - ./fe:/app
+      - /app/node_modules
     environment:
-      - NEXT_PUBLIC_API_URL=http://backend:8000/api # WAŻNE: Adres API wskazuje na nazwę usługi backendu
+      # WAŻNE: To ustawienie pozostaje BEZ ZMIAN!
+      - NEXT_PUBLIC_API_URL=http://backend:8000/api 
     depends_on:
-      - backend # Uruchom frontend dopiero, gdy backend będzie gotowy
+      - backend
