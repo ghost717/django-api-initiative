@@ -1,0 +1,54 @@
+name: Sync to Hugging Face hub
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+      - dev_20260218_composer
+    paths:
+      - ".github/workflows/sync_to_hf_space.yml"
+      - "**/*"
+  workflow_dispatch:
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+          # UWAGA: NIE ustawiamy ref: master, wtedy checkout
+          # pobierze dokładnie ten branch, z którego był push
+
+      # 1) Push dla master -> prod space
+      - name: Push master to prod HF space
+        if: github.ref == 'refs/heads/master'
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git remote add hf-prod https://OjciecTadeusz:${HF_TOKEN}@huggingface.co/spaces/OjciecTadeusz/django-api-initiatives
+          # lokalny branch master -> branch main w HF Space
+          git push hf-prod master:main -f
+
+      # 2) Push dla dev -> dev space
+      - name: Push dev to dev HF space
+        if: github.ref == 'refs/heads/dev_20260218_composer'
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git remote add hf-dev https://OjciecTadeusz:${HF_TOKEN}@huggingface.co/spaces/OjciecTadeusz/django-api-initiatives
+          # lokalny branch dev -> branch main w HF Space
+          git push hf-dev dev_20260218_composer:main -f
+
+      # # 2) Push dla dev -> dev space
+      # - name: Push dev to dev HF space
+      #   if: github.ref == 'refs/heads/dev'
+      #   env:
+      #     HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      #   run: |
+      #     git remote add hf-dev https://OjciecTadeusz:${HF_TOKEN}@huggingface.co/spaces/OjciecTadeusz/django-api-initiatives
+      #     # lokalny branch dev -> branch main w HF Space
+      #     git push hf-dev dev:main -f
