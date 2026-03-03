@@ -1,3 +1,16 @@
+---
+sdk: docker
+title: django-api-initiative
+---
+emoji: {{emoji}}
+colorFrom: {{colorFrom}}
+colorTo: {{colorTo}}
+sdk: {{sdk}}
+sdk_version: "{{sdkVersion}}"
+app_file: app.py
+pinned: false
+
+<!-- 
 # django-api-initiative
 
 ## deploy
@@ -12,3 +25,4 @@ npm run dev -- -H 0.0.0.0
 
 [gemini](https://aistudio.google.com/prompts/1y4iyzQiko_le0tCuBM_t4IuV9T9a2TVA)
 [deploy](https://claude.ai/chat/2f186621-df79-4aef-b3a3-9214b207718f)
+ -->
