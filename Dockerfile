@@ -1,5 +1,5 @@
 # Użyj oficjalnego obrazu Node.js
-FROM node:18-alpine
+FROM node:20-alpine as frontend-builder
 
 # Ustaw katalog roboczy w kontenerze
 WORKDIR /app
@@ -14,7 +14,10 @@ RUN npm install
 COPY . .
 
 # Wystaw port, na którym działa serwer deweloperski Next.js
-EXPOSE 3000
+# EXPOSE 3000
 
-# Uruchom serwer deweloperski
-CMD ["npm", "run", "dev"]```
+# # Uruchom serwer deweloperski
+# CMD ["npm", "run", "dev"]```
+EXPOSE 7860
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
